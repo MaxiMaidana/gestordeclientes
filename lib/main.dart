@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gestor_de_clientes/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -7,7 +9,21 @@ import 'core/routes/go_routes.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
-  runApp(const MyApp());
+  runApp(const BlocProviders());
+}
+
+class BlocProviders extends StatelessWidget {
+  const BlocProviders({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthCubit()),
+      ],
+      child: const MyApp(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

@@ -49,6 +49,16 @@ GoRouter goRouter = GoRouter(
       builder: (context, state) {
         return const HomePage();
       },
+      // routes: [
+      //     GoRoute(
+      //   path: Routes.clients,
+      //   builder: (context, state) => const Page1Screen(),
+      // ),
+      // GoRoute(
+      //   path: '/page2',
+      //   builder: (context, state) => const Page2Screen(),
+      // ),
+      // ],
     ),
     // GoRoute(
     //   path: Routes.register,
