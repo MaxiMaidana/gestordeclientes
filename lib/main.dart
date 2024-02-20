@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gestor_de_clientes/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'core/routes/go_routes.dart';
 
@@ -31,26 +32,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlobalLoaderOverlay(
-      useDefaultLoading: false,
-      overlayWidgetBuilder: (progres) {
-        return const Center(
-          child: CircularProgressIndicator(color: Colors.pink),
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return GlobalLoaderOverlay(
+          useDefaultLoading: false,
+          overlayWidgetBuilder: (progres) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.pink),
+            );
+          },
+          child: MaterialApp.router(
+            title: 'Gestor de clientes',
+            debugShowCheckedModeBanner: false,
+            routerConfig: goRouter,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              // GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('es', 'ES'),
+            ],
+          ),
         );
       },
-      child: MaterialApp.router(
-        title: 'Gestor de clientes',
-        debugShowCheckedModeBanner: false,
-        routerConfig: goRouter,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          // GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('es', 'ES'),
-        ],
-      ),
     );
   }
 }
