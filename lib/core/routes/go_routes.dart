@@ -3,6 +3,7 @@ import 'package:gestor_de_clientes/core/routes/routes.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/page/auth_page.dart';
+import '../../features/home/page/home_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -43,13 +44,12 @@ GoRouter goRouter = GoRouter(
         return const AuthPage();
       },
     ),
-    // GoRoute(
-    //   path: Routes.auth,
-    //   builder: (context, state) {
-    //     Get.put(AuthController());
-    //     return const AuthPage();
-    //   },
-    // ),
+    GoRoute(
+      path: Routes.home,
+      builder: (context, state) {
+        return const HomePage();
+      },
+    ),
     // GoRoute(
     //   path: Routes.register,
     //   builder: (context, state) {

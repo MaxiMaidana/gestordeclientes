@@ -13,7 +13,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GlobalLoaderOverlay(
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
         );
       },
       child: MaterialApp.router(
-        title: 'Flutter Demoooooooooo',
+        title: 'Gestor de clientes',
         debugShowCheckedModeBanner: false,
         routerConfig: goRouter,
         localizationsDelegates: const [

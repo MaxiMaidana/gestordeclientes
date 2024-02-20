@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/widget_tree.dart';
+import '../../../../core/responsive/widget_tree.dart';
 import '../view/tablet_auth_view.dart';
 
 class AuthPage extends StatefulWidget {

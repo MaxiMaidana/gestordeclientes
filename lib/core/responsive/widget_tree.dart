@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gestor_de_clientes/core/responsive_layout.dart';
+import 'package:gestor_de_clientes/core/responsive/responsive_layout.dart';
 
 class WidgetTree extends StatefulWidget {
   final Widget tiny;

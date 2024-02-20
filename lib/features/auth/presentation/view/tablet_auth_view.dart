@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gestor_de_clientes/core/routes/routes.dart';
+import 'package:go_router/go_router.dart';
 
 class TabletAuthView extends StatefulWidget {
   const TabletAuthView({super.key});
@@ -13,15 +15,24 @@ class _TabletAuthViewState extends State<TabletAuthView> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        child: Column(
-      children: [
-        TextFormField(
-          controller: userController,
-        ),
-        TextFormField(
-          controller: passwordController,
-        ),
-      ],
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextFormField(
+            controller: userController,
+          ),
+          TextFormField(
+            controller: passwordController,
+          ),
+          const SizedBox(height: 15),
+          ElevatedButton(
+            onPressed: () => context.go(Routes.home),
+            child: const Text('Ingresar'),
+          )
+        ],
+      ),
     ));
   }
 }
