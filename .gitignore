@@ -1,4 +1,7 @@
 # Miscellaneous
+windows/
+linux/
+macos/
 *.class
 *.log
 *.pyc

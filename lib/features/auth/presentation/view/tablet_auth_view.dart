@@ -15,11 +15,15 @@ class TabletAuthView extends StatefulWidget {
 class _TabletAuthViewState extends State<TabletAuthView> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final FocusNode userFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
 
   @override
   void dispose() {
     userController.dispose();
     passwordController.dispose();
+    userFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 
@@ -27,30 +31,37 @@ class _TabletAuthViewState extends State<TabletAuthView> {
   Widget build(BuildContext context) {
     final authCubit = context.watch<AuthCubit>();
     return Form(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextFormField(
-            controller: userController,
-          ),
-          TextFormField(
-            controller: passwordController,
-          ),
-          const SizedBox(height: 15),
-          ElevatedButton(
-            onPressed: () {
-              authCubit.login(
-                  username: userController.text, pass: passwordController.text);
-              if (authCubit.state) {
-                context.go(Routes.home);
-              }
-            },
-            child: const Text('Ingresar'),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextFormField(
+              focusNode: userFocusNode,
+              controller: userController,
+              onFieldSubmitted: (value) => passwordFocusNode.requestFocus(),
+            ),
+            TextFormField(
+              focusNode: passwordFocusNode,
+              controller: passwordController,
+              onFieldSubmitted: (value) => _onSubmit(authCubit),
+            ),
+            const SizedBox(height: 15),
+            ElevatedButton(
+              onPressed: () => _onSubmit(authCubit),
+              child: const Text('Ingresar'),
+            )
+          ],
+        ),
       ),
-    ));
+    );
+  }
+
+  void _onSubmit(AuthCubit authCubit) {
+    authCubit.login(
+        username: userController.text, pass: passwordController.text);
+    if (authCubit.state) {
+      context.go(Routes.home);
+    }
   }
 }

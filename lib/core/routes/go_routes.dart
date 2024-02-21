@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gestor_de_clientes/core/routes/routes.dart';
+import 'package:gestor_de_clientes/features/calendar/view/calendar_view.dart';
+import 'package:gestor_de_clientes/features/clients/view/client_id_view.dart';
+import 'package:gestor_de_clientes/features/clients/view/clients_view.dart';
+import 'package:gestor_de_clientes/features/home/presentation/view/home_view.dart';
+import 'package:gestor_de_clientes/features/new_client/new_client.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/page/auth_page.dart';
-import '../../features/home/page/home_page.dart';
+import '../../features/main/page/main_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -11,21 +16,12 @@ final GlobalKey<NavigatorState> _rootNavigatorKey =
 //     GlobalKey<NavigatorState>(debugLabel: 'shell');
 GoRouter goRouter = GoRouter(
   debugLogDiagnostics: true,
-  initialLocation: Routes.main,
+  initialLocation: Routes.init,
   navigatorKey: _rootNavigatorKey,
   routes: [
     GoRoute(
-      path: Routes.main,
+      path: Routes.init,
       redirect: (context, state) {
-        // if (!GetPlatform.isWeb) {
-        //   if (!LocalStorage.getPrefBool(SetPref.isFirstTime)) {
-        //     return Routes.intro;
-        //   } else if (LocalStorage.getPrefBool(SetPref.auth)) {
-        //     return Routes.home;
-        //   } else {
-        //     return Routes.auth;
-        //   }
-        // }
         return Routes.auth;
       },
       // builder: (context, state) {
@@ -44,98 +40,66 @@ GoRouter goRouter = GoRouter(
         return const AuthPage();
       },
     ),
-    GoRoute(
-      path: Routes.home,
-      builder: (context, state) {
-        return const HomePage();
+    ShellRoute(
+      pageBuilder: (_, routerState, child) {
+        return NoTransitionPage<void>(
+          key: routerState.pageKey,
+          child: MainPage(
+            view: child,
+          ),
+        );
       },
-      // routes: [
-      //     GoRoute(
-      //   path: Routes.clients,
-      //   builder: (context, state) => const Page1Screen(),
-      // ),
-      // GoRoute(
-      //   path: '/page2',
-      //   builder: (context, state) => const Page2Screen(),
-      // ),
-      // ],
+      routes: <RouteBase>[
+        GoRoute(
+          path: Routes.calendar,
+          pageBuilder: (_, routerState) {
+            return NoTransitionPage<void>(
+              key: routerState.pageKey,
+              child: const CalendarView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: Routes.clients,
+          pageBuilder: (_, routerState) {
+            return NoTransitionPage<void>(
+              key: routerState.pageKey,
+              child: const ClientsView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '${Routes.clients}/:id',
+          pageBuilder: (_, routerState) {
+            return NoTransitionPage<void>(
+              key: routerState.pageKey,
+              child: ClientIdView(
+                id: routerState.pathParameters['id']!,
+              ),
+            );
+          },
+        ),
+        GoRoute(
+          path: Routes.addClient,
+          pageBuilder: (_, routerState) {
+            return NoTransitionPage<void>(
+              key: routerState.pageKey,
+              child: const NewClient(),
+            );
+          },
+        ),
+        GoRoute(
+          path: Routes.home,
+          pageBuilder: (_, routerState) {
+            return NoTransitionPage<void>(
+              key: routerState.pageKey,
+              child: const HomeView(),
+            );
+          },
+        ),
+      ],
     ),
-    // GoRoute(
-    //   path: Routes.register,
-    //   builder: (context, state) {
-    //     Get.put(RegisterController());
-    //     return const RegisterPage();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: Routes.registerComplete,
-    //   builder: (context, state) {
-    //     return const RegisterCompletePage();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: Routes.changePassword,
-    //   builder: (context, state) {
-    //     Get.put(ChangePasswordController());
-    //     return const ChangePasswordPage();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: Routes.home,
-    //   builder: (context, state) {
-    //     Get.put(HomeController());
-    //     Get.put(ProfileController());
-    //     Get.put(PetsController());
-    //     Get.put(AdsController());
-    //     Get.put(ReminderPageController());
-    //     final reminderController = Get.find<ReminderController>();
-    //     reminderController.initCalendarApi();
-    //     // Get.delete<RegisterController>(force: true);
-    //     // Get.delete<AuthController>(force: true);
-    //     return const HomePage();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: Routes.newPet,
-    //   builder: (context, state) {
-    //     Get.put(NewPetController());
-    //     return const NewPetPage();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: Routes.newPetCompleted,
-    //   builder: (context, state) {
-    //     return const PetAddedCorrectPage();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: Routes.infoPet,
-    //   builder: (context, state) {
-    //     final infoPetController = Get.put(InfoPetController());
-    //     infoPetController.setPetId(state.queryParams['id']!);
-    //     final petsController = Get.find<PetsController>();
-    //     infoPetController
-    //         .setPetModel(petsController.searchPet(state.queryParams['id']!));
-    //     return const InfoPetPage();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: Routes.editInfoPet,
-    //   builder: (context, state) {
-    //     final editInfoPetController = Get.put(EditInfoPetController());
-    //     final petsController = Get.find<PetsController>();
-    //     editInfoPetController
-    //         .setPetModel(petsController.searchPet(state.queryParams['id']!));
-    //     return const EditInfoPetPage();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: Routes.map,
-    //   builder: (context, state) {
-    //     Get.put(MapController());
-    //     return const MapPage();
-    //   },
-    // ),
+
     // ShellRoute(
     //   navigatorKey: _shellNavigatorKey,
     //   builder: (BuildContext context, GoRouterState state, Widget child) {
@@ -191,10 +155,12 @@ GoRouter goRouter = GoRouter(
     //     ),
     //   ],
     // ),
-    // GoRoute(
-    //   parentNavigatorKey: _rootNavigatorKey,
-    //   path: Routes.errorPage,
-    //   builder: (context, state) => const Page404(),
-    // ),
+    GoRoute(
+      parentNavigatorKey: _rootNavigatorKey,
+      path: Routes.errorPage,
+      builder: (context, state) => const Scaffold(
+        body: Text('error pa'),
+      ),
+    ),
   ],
 );
