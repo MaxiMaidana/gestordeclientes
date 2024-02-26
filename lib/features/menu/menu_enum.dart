@@ -1,1 +1,1 @@
-enum MenuItem { init, clients, calendar, config }
+enum MenuItem { home, clients, calendar, config }

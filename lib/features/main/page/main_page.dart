@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gestor_de_clientes/features/main/view/main_view.dart';
 
 import '../../../core/responsive/widget_tree.dart';
-import '../../menu/menu_enum.dart';
 
 class MainPage extends StatefulWidget {
   final Widget view;

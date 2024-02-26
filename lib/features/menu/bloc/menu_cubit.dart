@@ -1,12 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gestor_de_clientes/features/menu/menu_enum.dart';
 
 class MenuCubit extends Cubit<bool> {
   MenuCubit() : super(true);
 
-  MenuItem menuItem = MenuItem.init;
+  bool showText = true;
 
-  void changeMenu() {
-    emit(!state);
+  Future<void> changeMenuSize(bool isOpen) async {
+    if (isOpen) {
+      emit(isOpen);
+      await Future.delayed(const Duration(milliseconds: 400));
+      showText = true;
+    } else {
+      isOpen = false;
+      emit(isOpen);
+    }
   }
 }
