@@ -3,6 +3,7 @@ import 'package:gestor_de_clientes/core/routes/routes.dart';
 import 'package:gestor_de_clientes/features/calendar/view/calendar_view.dart';
 import 'package:gestor_de_clientes/features/clients/view/client_id_view.dart';
 import 'package:gestor_de_clientes/features/clients/view/clients_view.dart';
+import 'package:gestor_de_clientes/features/config/presentation/view/config_view.dart';
 import 'package:gestor_de_clientes/features/home/presentation/view/home_view.dart';
 import 'package:gestor_de_clientes/features/menu/menu_enum.dart';
 import 'package:gestor_de_clientes/features/new_client/new_client.dart';
@@ -100,6 +101,17 @@ GoRouter goRouter = GoRouter(
               key: routerState.pageKey,
               child: const HomeView(
                 menuItem: MenuItem.home,
+              ),
+            );
+          },
+        ),
+        GoRoute(
+          path: Routes.config,
+          pageBuilder: (_, routerState) {
+            return NoTransitionPage<void>(
+              key: routerState.pageKey,
+              child: const ConfigView(
+                menuItem: MenuItem.config,
               ),
             );
           },
