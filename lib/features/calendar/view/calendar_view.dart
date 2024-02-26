@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gestor_de_clientes/features/calendar/widget/tablet_calendar.dart';
 import 'package:gestor_de_clientes/features/menu/bloc/menu_item_cubit.dart';
 import 'package:gestor_de_clientes/features/menu/menu_enum.dart';
 
@@ -15,9 +16,9 @@ class CalendarView extends StatelessWidget {
     return WidgetTree(
       tiny: Text('tiny calendar'),
       phone: Text('phone calendar'),
-      tablet: Text('tablet calendar'),
-      largeTablet: Text('tablet calendar'),
-      computer: Text('computer calendar'),
+      tablet: TabletCalendar(),
+      largeTablet: TabletCalendar(),
+      computer: TabletCalendar(),
     );
   }
 }
